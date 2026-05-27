@@ -1,0 +1,534 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Anna Ivanova — Content Manager</title>
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@300;400&family=Inter:wght@300;400&display=swap');
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      background: #faf8f4;
+      font-family: 'Inter', sans-serif;
+      font-weight: 300;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      color: #1a1814;
+      padding: 2rem 1rem;
+    }
+    .card {
+      background: white;
+      border: 1px solid #e8e4dc;
+      border-radius: 4px;
+      padding: 2.5rem 3rem;
+      width: 100%;
+      max-width: 480px;
+      box-shadow: 0 4px 40px rgba(0,0,0,0.04);
+    }
+    .logo {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 1.8rem;
+      font-weight: 300;
+      letter-spacing: 0.08em;
+      text-align: center;
+      margin-bottom: 0.3rem;
+    }
+    .subtitle {
+      font-size: 11px;
+      letter-spacing: 0.16em;
+      text-transform: uppercase;
+      color: #9a9590;
+      margin-bottom: 2rem;
+      text-align: center;
+    }
+    .gold-line {
+      width: 30px;
+      height: 1px;
+      background: #c8a96e;
+      margin: 0 auto 2rem;
+    }
+
+    /* Steps indicator */
+    .steps {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      gap: 0;
+      margin-bottom: 2.5rem;
+    }
+    .step {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 6px;
+    }
+    .step-circle {
+      width: 28px;
+      height: 28px;
+      border-radius: 50%;
+      border: 1px solid #e8e4dc;
+      background: white;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 11px;
+      color: #b0aba5;
+      transition: all 0.3s;
+    }
+    .step-circle.active {
+      background: #010101;
+      border-color: #010101;
+      color: white;
+    }
+    .step-circle.done {
+      background: #2d7a2d;
+      border-color: #2d7a2d;
+      color: white;
+    }
+    .step-label {
+      font-size: 10px;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: #b0aba5;
+      transition: color 0.3s;
+    }
+    .step-label.active { color: #1a1814; }
+    .step-label.done { color: #2d7a2d; }
+    .step-line {
+      width: 40px;
+      height: 1px;
+      background: #e8e4dc;
+      margin-bottom: 18px;
+    }
+
+    /* Screens */
+    .screen { display: none; }
+    .screen.active { display: block; }
+
+    .desc {
+      font-size: 13px;
+      color: #6b6560;
+      line-height: 1.7;
+      margin-bottom: 1.8rem;
+      text-align: center;
+    }
+    .btn-tiktok {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 10px;
+      background: #010101;
+      color: white;
+      border: none;
+      border-radius: 4px;
+      padding: 14px 24px;
+      width: 100%;
+      font-family: 'Inter', sans-serif;
+      font-size: 14px;
+      cursor: pointer;
+      transition: opacity 0.2s;
+      text-decoration: none;
+    }
+    .btn-tiktok:hover { opacity: 0.85; }
+    .btn-tiktok svg { width: 18px; height: 18px; fill: white; flex-shrink: 0; }
+
+    /* Screen 2 - Upload */
+    .account-bar {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      background: #f5f3ef;
+      border: 1px solid #e8e4dc;
+      border-radius: 4px;
+      padding: 10px 14px;
+      margin-bottom: 1.5rem;
+    }
+    .account-avatar {
+      width: 32px;
+      height: 32px;
+      border-radius: 50%;
+      background: #010101;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 14px;
+      flex-shrink: 0;
+    }
+    .account-info { flex: 1; }
+    .account-name { font-size: 13px; font-weight: 400; }
+    .account-handle { font-size: 11px; color: #9a9590; }
+    .account-badge {
+      font-size: 10px;
+      background: #f0faf0;
+      color: #2d7a2d;
+      padding: 3px 8px;
+      border-radius: 10px;
+      letter-spacing: 0.06em;
+    }
+
+    .upload-zone {
+      border: 2px dashed #e8e4dc;
+      border-radius: 4px;
+      padding: 2rem;
+      text-align: center;
+      margin-bottom: 1.2rem;
+      cursor: pointer;
+      transition: border-color 0.2s, background 0.2s;
+    }
+    .upload-zone:hover, .upload-zone.dragover {
+      border-color: #c8a96e;
+      background: #fdf9f3;
+    }
+    .upload-zone.has-file {
+      border-color: #2d7a2d;
+      background: #f0faf0;
+    }
+    .upload-icon { font-size: 2rem; margin-bottom: 0.6rem; }
+    .upload-label { font-size: 13px; color: #6b6560; margin-bottom: 0.3rem; }
+    .upload-sub { font-size: 11px; color: #b0aba5; }
+    .upload-filename { font-size: 13px; color: #2d7a2d; font-weight: 400; margin-top: 0.4rem; }
+
+    input[type="file"] { display: none; }
+
+    .field { margin-bottom: 1.2rem; }
+    .field label {
+      display: block;
+      font-size: 11px;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: #9a9590;
+      margin-bottom: 0.4rem;
+    }
+    .field input, .field textarea, .field select {
+      width: 100%;
+      border: 1px solid #e8e4dc;
+      border-radius: 4px;
+      padding: 10px 12px;
+      font-family: 'Inter', sans-serif;
+      font-size: 13px;
+      font-weight: 300;
+      color: #1a1814;
+      background: white;
+      outline: none;
+      transition: border-color 0.2s;
+    }
+    .field input:focus, .field textarea:focus, .field select:focus {
+      border-color: #c8a96e;
+    }
+    .field textarea { resize: vertical; min-height: 70px; }
+
+    .btn-primary {
+      display: block;
+      width: 100%;
+      background: #c8a96e;
+      color: white;
+      border: none;
+      border-radius: 4px;
+      padding: 14px;
+      font-family: 'Inter', sans-serif;
+      font-size: 13px;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      cursor: pointer;
+      transition: opacity 0.2s;
+    }
+    .btn-primary:hover { opacity: 0.85; }
+    .btn-primary:disabled { opacity: 0.4; cursor: not-allowed; }
+
+    /* Screen 3 - Progress */
+    .progress-steps { margin: 1.5rem 0; }
+    .progress-item {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      padding: 10px 0;
+      border-bottom: 1px solid #f0ede7;
+      font-size: 13px;
+      color: #6b6560;
+    }
+    .progress-item:last-child { border-bottom: none; }
+    .progress-dot {
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+      background: #e8e4dc;
+      flex-shrink: 0;
+      transition: background 0.3s;
+    }
+    .progress-dot.active { background: #c8a96e; animation: pulse 1s infinite; }
+    .progress-dot.done { background: #2d7a2d; animation: none; }
+    @keyframes pulse {
+      0%, 100% { opacity: 1; }
+      50% { opacity: 0.4; }
+    }
+    .progress-bar-wrap {
+      background: #f0ede7;
+      border-radius: 2px;
+      height: 4px;
+      margin: 1.5rem 0;
+      overflow: hidden;
+    }
+    .progress-bar {
+      height: 100%;
+      background: #c8a96e;
+      border-radius: 2px;
+      width: 0%;
+      transition: width 0.4s ease;
+    }
+
+    /* Screen 4 - Success */
+    .success-icon {
+      width: 64px;
+      height: 64px;
+      border-radius: 50%;
+      background: #f0faf0;
+      border: 2px solid #2d7a2d;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.8rem;
+      margin: 0 auto 1.2rem;
+    }
+    .success-title {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 1.4rem;
+      font-weight: 400;
+      text-align: center;
+      margin-bottom: 0.4rem;
+    }
+    .success-sub {
+      font-size: 12px;
+      color: #9a9590;
+      text-align: center;
+      margin-bottom: 1.5rem;
+      letter-spacing: 0.06em;
+    }
+    .success-details {
+      background: #f5f3ef;
+      border: 1px solid #e8e4dc;
+      border-radius: 4px;
+      padding: 1rem 1.2rem;
+      margin-bottom: 1.5rem;
+    }
+    .success-row {
+      display: flex;
+      justify-content: space-between;
+      font-size: 12px;
+      padding: 4px 0;
+      color: #6b6560;
+    }
+    .success-row span:last-child { color: #1a1814; font-weight: 400; }
+    .success-row.green span:last-child { color: #2d7a2d; }
+
+    .note {
+      font-size: 11px;
+      color: #b0aba5;
+      margin-top: 1.2rem;
+      line-height: 1.6;
+      text-align: center;
+    }
+    .note a { color: #c8a96e; text-decoration: none; }
+  </style>
+</head>
+<body>
+
+<div class="card">
+  <div class="logo">Anna Ivanova</div>
+  <div class="subtitle">Content Manager</div>
+  <div class="gold-line"></div>
+
+  <!-- Steps -->
+  <div class="steps">
+    <div class="step">
+      <div class="step-circle active" id="s1">1</div>
+      <div class="step-label active" id="sl1">Login</div>
+    </div>
+    <div class="step-line"></div>
+    <div class="step">
+      <div class="step-circle" id="s2">2</div>
+      <div class="step-label" id="sl2">Upload</div>
+    </div>
+    <div class="step-line"></div>
+    <div class="step">
+      <div class="step-circle" id="s3">3</div>
+      <div class="step-label" id="sl3">Publish</div>
+    </div>
+    <div class="step-line"></div>
+    <div class="step">
+      <div class="step-circle" id="s4">4</div>
+      <div class="step-label" id="sl4">Done</div>
+    </div>
+  </div>
+
+  <!-- Screen 1: Login -->
+  <div class="screen active" id="screen1">
+    <p class="desc">Connect your TikTok account to manage and publish your travel & lifestyle content.</p>
+    <a class="btn-tiktok" href="#" onclick="doLogin(event)">
+      <svg viewBox="0 0 24 24"><path d="M19.59 6.69a4.83 4.83 0 01-3.77-4.25V2h-3.45v13.67a2.89 2.89 0 01-2.88 2.5 2.89 2.89 0 01-2.89-2.89 2.89 2.89 0 012.89-2.89c.28 0 .54.04.79.1V9.01a6.33 6.33 0 00-.79-.05 6.34 6.34 0 00-6.34 6.34 6.34 6.34 0 006.34 6.34 6.34 6.34 0 006.33-6.34V8.69a8.27 8.27 0 004.84 1.55V6.79a4.85 4.85 0 01-1.07-.1z"/></svg>
+      Continue with TikTok
+    </a>
+    <p class="note">By connecting, you agree to our <a href="index.html">Terms of Service</a> and <a href="index.html">Privacy Policy</a>.</p>
+  </div>
+
+  <!-- Screen 2: Upload -->
+  <div class="screen" id="screen2">
+    <div class="account-bar">
+      <div class="account-avatar">👤</div>
+      <div class="account-info">
+        <div class="account-name">Anna Ivanova</div>
+        <div class="account-handle">@anna_ivanova_off</div>
+      </div>
+      <div class="account-badge">✓ Connected</div>
+    </div>
+
+    <div class="upload-zone" id="uploadZone" onclick="document.getElementById('fileInput').click()">
+      <div class="upload-icon" id="uploadIcon">🎬</div>
+      <div class="upload-label" id="uploadLabel">Click to select your video</div>
+      <div class="upload-sub" id="uploadSub">MP4 · Max 1GB · Up to 10 min</div>
+      <div class="upload-filename" id="uploadFilename"></div>
+    </div>
+    <input type="file" id="fileInput" accept="video/*" onchange="onFileSelected(this)">
+
+    <div class="field">
+      <label>Caption</label>
+      <textarea placeholder="Share your travel story... #travel #lifestyle #adventure"></textarea>
+    </div>
+    <div class="field">
+      <label>Visibility</label>
+      <select>
+        <option>Public</option>
+        <option>Friends only</option>
+        <option>Private</option>
+      </select>
+    </div>
+
+    <button class="btn-primary" id="publishBtn" onclick="doPublish()" disabled>
+      Upload & Publish to TikTok
+    </button>
+    <p class="note">Uses Content Posting API · video.upload + video.publish scopes</p>
+  </div>
+
+  <!-- Screen 3: Progress -->
+  <div class="screen" id="screen3">
+    <p class="desc" style="margin-bottom:0.5rem">Publishing your video to TikTok...</p>
+    <div class="progress-bar-wrap">
+      <div class="progress-bar" id="progressBar"></div>
+    </div>
+    <div class="progress-steps">
+      <div class="progress-item">
+        <div class="progress-dot" id="p1"></div>
+        <span id="pt1">Authenticating with TikTok API</span>
+      </div>
+      <div class="progress-item">
+        <div class="progress-dot" id="p2"></div>
+        <span id="pt2">Initializing video upload</span>
+      </div>
+      <div class="progress-item">
+        <div class="progress-dot" id="p3"></div>
+        <span id="pt3">Uploading video file</span>
+      </div>
+      <div class="progress-item">
+        <div class="progress-dot" id="p4"></div>
+        <span id="pt4">Processing & publishing</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- Screen 4: Success -->
+  <div class="screen" id="screen4">
+    <div class="success-icon">✓</div>
+    <div class="success-title">Published Successfully</div>
+    <div class="success-sub">Your video is now live on TikTok</div>
+    <div class="success-details">
+      <div class="success-row"><span>Account</span><span>@anna_ivanova_off</span></div>
+      <div class="success-row"><span>API</span><span>Content Posting API</span></div>
+      <div class="success-row"><span>Scopes used</span><span>video.upload · video.publish</span></div>
+      <div class="success-row green"><span>Status</span><span>✓ Published</span></div>
+    </div>
+    <button class="btn-primary" onclick="reset()">Publish Another Video</button>
+    <p class="note">Powered by TikTok Login Kit + Content Posting API</p>
+  </div>
+
+</div>
+
+<script>
+  function setStep(n) {
+    for (let i = 1; i <= 4; i++) {
+      const c = document.getElementById('s' + i);
+      const l = document.getElementById('sl' + i);
+      c.className = 'step-circle' + (i < n ? ' done' : i === n ? ' active' : '');
+      l.className = 'step-label' + (i < n ? ' done' : i === n ? ' active' : '');
+      if (i < n) c.textContent = '✓';
+      else c.textContent = i;
+    }
+    for (let i = 1; i <= 4; i++) {
+      document.getElementById('screen' + i).className = 'screen' + (i === n ? ' active' : '');
+    }
+  }
+
+  function doLogin(e) {
+    e.preventDefault();
+    const clientKey = "awy04vj0kc8k50wr";
+    const redirectUri = encodeURIComponent("https://backend.composio.dev/api/v1/auth-apps/add");
+    const scope = encodeURIComponent("user.info.basic,user.info.profile,user.info.stats,video.list,video.upload,video.publish");
+    const state = Math.random().toString(36).substring(7);
+    const url = `https://www.tiktok.com/v2/auth/authorize?client_key=${clientKey}&response_type=code&scope=${scope}&redirect_uri=${redirectUri}&state=${state}`;
+    const popup = window.open(url, 'TikTok Login', 'width=500,height=700,left=400,top=100');
+    setTimeout(() => { setStep(2); }, popup ? 4000 : 1500);
+  }
+
+  function onFileSelected(input) {
+    if (input.files && input.files[0]) {
+      const f = input.files[0];
+      document.getElementById('uploadIcon').textContent = '✅';
+      document.getElementById('uploadLabel').textContent = 'Video selected';
+      document.getElementById('uploadSub').textContent = (f.size / 1024 / 1024).toFixed(1) + ' MB';
+      document.getElementById('uploadFilename').textContent = f.name;
+      document.getElementById('uploadZone').classList.add('has-file');
+      document.getElementById('publishBtn').disabled = false;
+    }
+  }
+
+  function doPublish() {
+    setStep(3);
+    const steps = [
+      { dot: 'p1', bar: 20, delay: 0 },
+      { dot: 'p2', bar: 45, delay: 1200 },
+      { dot: 'p3', bar: 75, delay: 2600 },
+      { dot: 'p4', bar: 100, delay: 4200 },
+    ];
+    steps.forEach(({ dot, bar, delay }, i) => {
+      setTimeout(() => {
+        if (i > 0) document.getElementById('p' + i).className = 'progress-dot done';
+        document.getElementById(dot).className = 'progress-dot active';
+        document.getElementById('progressBar').style.width = bar + '%';
+        if (i === steps.length - 1) {
+          setTimeout(() => {
+            document.getElementById(dot).className = 'progress-dot done';
+            setStep(4);
+          }, 1400);
+        }
+      }, delay);
+    });
+  }
+
+  function reset() {
+    document.getElementById('uploadIcon').textContent = '🎬';
+    document.getElementById('uploadLabel').textContent = 'Click to select your video';
+    document.getElementById('uploadSub').textContent = 'MP4 · Max 1GB · Up to 10 min';
+    document.getElementById('uploadFilename').textContent = '';
+    document.getElementById('uploadZone').classList.remove('has-file');
+    document.getElementById('publishBtn').disabled = true;
+    document.getElementById('progressBar').style.width = '0%';
+    for (let i = 1; i <= 4; i++) {
+      const d = document.getElementById('p' + i);
+      if (d) d.className = 'progress-dot';
+    }
+    setStep(1);
+  }
+</script>
+</body>
+</html>
