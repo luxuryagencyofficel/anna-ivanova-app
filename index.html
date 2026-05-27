@@ -1,0 +1,243 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Anna Ivanova — Content Creator App</title>
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@300;400;500&family=Inter:wght@300;400&display=swap');
+
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --cream: #faf8f4;
+      --ink: #1a1814;
+      --muted: #6b6560;
+      --accent: #c8a96e;
+      --border: #e8e4dc;
+    }
+
+    body {
+      background: var(--cream);
+      color: var(--ink);
+      font-family: 'Inter', sans-serif;
+      font-weight: 300;
+      line-height: 1.8;
+      font-size: 15px;
+    }
+
+    header {
+      border-bottom: 1px solid var(--border);
+      padding: 2.5rem 0;
+      text-align: center;
+    }
+
+    header h1 {
+      font-family: 'Cormorant Garamond', serif;
+      font-weight: 300;
+      font-size: 2.2rem;
+      letter-spacing: 0.08em;
+      color: var(--ink);
+    }
+
+    header p {
+      color: var(--muted);
+      font-size: 13px;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      margin-top: 0.4rem;
+    }
+
+    nav {
+      display: flex;
+      justify-content: center;
+      gap: 2.5rem;
+      padding: 1.2rem 0;
+      border-bottom: 1px solid var(--border);
+      background: var(--cream);
+      position: sticky;
+      top: 0;
+      z-index: 10;
+    }
+
+    nav a {
+      text-decoration: none;
+      color: var(--muted);
+      font-size: 12px;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      transition: color 0.2s;
+    }
+
+    nav a:hover { color: var(--accent); }
+
+    main {
+      max-width: 720px;
+      margin: 0 auto;
+      padding: 4rem 2rem 6rem;
+    }
+
+    section {
+      margin-bottom: 5rem;
+      scroll-margin-top: 80px;
+    }
+
+    section h2 {
+      font-family: 'Cormorant Garamond', serif;
+      font-weight: 400;
+      font-size: 1.7rem;
+      margin-bottom: 2rem;
+      padding-bottom: 0.8rem;
+      border-bottom: 1px solid var(--border);
+      color: var(--ink);
+    }
+
+    section h3 {
+      font-family: 'Cormorant Garamond', serif;
+      font-weight: 500;
+      font-size: 1.15rem;
+      margin: 2rem 0 0.6rem;
+      color: var(--ink);
+    }
+
+    p { margin-bottom: 1rem; color: #3a3830; }
+
+    ul {
+      padding-left: 1.4rem;
+      margin-bottom: 1rem;
+    }
+
+    ul li {
+      margin-bottom: 0.4rem;
+      color: #3a3830;
+    }
+
+    .date {
+      font-size: 12px;
+      color: var(--muted);
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      margin-bottom: 2rem;
+      display: block;
+    }
+
+    .divider {
+      width: 40px;
+      height: 1px;
+      background: var(--accent);
+      margin: 3rem auto;
+    }
+
+    footer {
+      text-align: center;
+      padding: 2rem;
+      border-top: 1px solid var(--border);
+      font-size: 12px;
+      color: var(--muted);
+      letter-spacing: 0.1em;
+    }
+
+    a { color: var(--accent); }
+  </style>
+</head>
+<body>
+
+<header>
+  <h1>Anna Ivanova</h1>
+  <p>Travel & Lifestyle Content Creator</p>
+</header>
+
+<nav>
+  <a href="#privacy">Privacy Policy</a>
+  <a href="#terms">Terms of Service</a>
+  <a href="#contact">Contact</a>
+</nav>
+
+<main>
+
+  <section id="privacy">
+    <h2>Privacy Policy</h2>
+    <span class="date">Last updated: May 27, 2026</span>
+
+    <p>This Privacy Policy describes how Anna Ivanova ("we", "us", or "our") collects, uses, and handles information in connection with the use of our personal content management application (the "App").</p>
+
+    <h3>1. Information We Collect</h3>
+    <p>The App is a personal tool used exclusively by its owner to manage and publish content on TikTok. The App accesses the following information through TikTok's API:</p>
+    <ul>
+      <li>Basic account information (username, display name, profile picture)</li>
+      <li>Account statistics (follower count, following count, video count)</li>
+      <li>Video list and publishing status</li>
+    </ul>
+
+    <h3>2. How We Use Information</h3>
+    <p>All information accessed through TikTok's API is used solely to:</p>
+    <ul>
+      <li>Authenticate and verify the creator's personal TikTok account</li>
+      <li>Upload and publish travel and lifestyle video content to the creator's own TikTok profile</li>
+      <li>Monitor basic account performance metrics</li>
+    </ul>
+    <p>We do not collect, store, sell, or share any personal data from third-party users. The App operates exclusively on the creator's own account.</p>
+
+    <h3>3. Data Storage</h3>
+    <p>No personal data is stored by this application beyond the OAuth access tokens required to authenticate with TikTok. These tokens are stored securely and are used solely to perform the above-described actions.</p>
+
+    <h3>4. Third-Party Services</h3>
+    <p>The App uses TikTok's official Content Posting API and Login Kit. Data accessed through these services is governed by TikTok's own Privacy Policy, available at <a href="https://www.tiktok.com/legal/privacy-policy" target="_blank">tiktok.com/legal/privacy-policy</a>.</p>
+
+    <h3>5. Data Retention</h3>
+    <p>Authentication tokens are retained only as long as necessary to provide the publishing functionality. You may revoke access at any time through your TikTok account settings.</p>
+
+    <h3>6. Contact</h3>
+    <p>For any questions regarding this Privacy Policy, please contact us at <a href="#contact">the address below</a>.</p>
+  </section>
+
+  <div class="divider"></div>
+
+  <section id="terms">
+    <h2>Terms of Service</h2>
+    <span class="date">Last updated: May 27, 2026</span>
+
+    <p>These Terms of Service govern the use of the personal content management application operated by Anna Ivanova (the "App").</p>
+
+    <h3>1. Purpose of the App</h3>
+    <p>This App is a personal tool designed exclusively for the creator's own use. It is used to schedule, upload, and publish travel and lifestyle video content to a single TikTok account owned and operated by the App owner.</p>
+
+    <h3>2. No Third-Party Access</h3>
+    <p>This App is not available to the general public. It does not process any data belonging to third-party users. Only the App owner's TikTok account is connected and used.</p>
+
+    <h3>3. Compliance</h3>
+    <p>The App is built and operated in compliance with:</p>
+    <ul>
+      <li>TikTok's Platform Terms of Service</li>
+      <li>TikTok's Developer Terms of Service</li>
+      <li>TikTok's Community Guidelines</li>
+      <li>All applicable local and international laws</li>
+    </ul>
+
+    <h3>4. Content</h3>
+    <p>All content published through this App is original travel and lifestyle content created by the App owner. No copyrighted material belonging to third parties is published without proper authorization.</p>
+
+    <h3>5. Limitation of Liability</h3>
+    <p>The App is provided for personal use only. The owner assumes full responsibility for all content published through the App and its compliance with TikTok's policies.</p>
+
+    <h3>6. Modifications</h3>
+    <p>These Terms of Service may be updated at any time. Continued use of the App following any changes constitutes acceptance of those changes.</p>
+  </section>
+
+  <div class="divider"></div>
+
+  <section id="contact">
+    <h2>Contact</h2>
+    <p>For any questions, requests, or concerns regarding this application or its privacy practices, please reach out:</p>
+    <p>Email: <a href="mailto:contact@anna-ivanova.com">contact@anna-ivanova.com</a></p>
+    <p>TikTok: <a href="https://www.tiktok.com/@anna_ivanova_off" target="_blank">@anna_ivanova_off</a></p>
+  </section>
+
+</main>
+
+<footer>
+  &copy; 2026 Anna Ivanova · All rights reserved
+</footer>
+
+</body>
+</html>
